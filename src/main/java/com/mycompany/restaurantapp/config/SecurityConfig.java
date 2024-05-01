@@ -3,6 +3,7 @@ package com.mycompany.restaurantapp.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,7 +17,9 @@ public class SecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf(t -> t.disable());
         http.authorizeHttpRequests(requests ->
-                requests.anyRequest().authenticated()
+                requests.requestMatchers(HttpMethod.GET, "/restaurants/public/list").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/restaurants/public/menu/*").permitAll()
+                        .anyRequest().authenticated()
         );
         http.oauth2ResourceServer(t ->
                 t.opaqueToken(Customizer.withDefaults())
