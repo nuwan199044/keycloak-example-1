@@ -18,7 +18,7 @@ public class SecurityConfig {
                 requests.anyRequest().authenticated()
         );
         http.oauth2ResourceServer(t ->
-                t.jwt(Customizer.withDefaults())
+                t.opaqueToken(Customizer.withDefaults())
         );
         http.sessionManagement(
                 t -> t.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
