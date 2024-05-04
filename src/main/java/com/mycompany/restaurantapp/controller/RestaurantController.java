@@ -1,17 +1,22 @@
 package com.mycompany.restaurantapp.controller;
 
 import com.mycompany.restaurantapp.dto.MenuDTO;
+import com.mycompany.restaurantapp.dto.MenuItemDTO;
 import com.mycompany.restaurantapp.dto.RestaurantDTO;
+import com.mycompany.restaurantapp.service.MenuItemService;
 import com.mycompany.restaurantapp.service.MenuService;
 import com.mycompany.restaurantapp.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -21,6 +26,7 @@ public class RestaurantController {
 
     private final RestaurantService restaurantService;
     private final MenuService menuService;
+    private final MenuItemService menuItemService;
 
     @GetMapping("/public/list")
     public List<RestaurantDTO> getRestaurants() {
@@ -35,5 +41,11 @@ public class RestaurantController {
     @PostMapping
     public RestaurantDTO createRestaurant(@RequestBody RestaurantDTO restaurantDTO) {
         return restaurantService.createRestaurant(restaurantDTO);
+    }
+
+    @PutMapping("/menu/item/{itemId}/{price}")
+    @PreAuthorize("hasRole('owner')")
+    public MenuItemDTO createRestaurant(@PathVariable Long itemId, @PathVariable Double price) {
+        return menuItemService.updateMenuItemPrice(itemId, price);
     }
 }
