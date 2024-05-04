@@ -6,6 +6,7 @@ import com.mycompany.restaurantapp.dto.RestaurantDTO;
 import com.mycompany.restaurantapp.service.MenuItemService;
 import com.mycompany.restaurantapp.service.MenuService;
 import com.mycompany.restaurantapp.service.RestaurantService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/restaurants")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "Keycloak")
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
