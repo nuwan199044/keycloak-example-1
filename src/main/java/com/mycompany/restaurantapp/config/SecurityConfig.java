@@ -24,6 +24,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(requests ->
                 requests.requestMatchers(HttpMethod.GET, "/restaurants/public/list").permitAll()
                         .requestMatchers(HttpMethod.GET, "/restaurants/public/menu/*").permitAll()
+                        .requestMatchers("/swagger-ui/**","/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
         );
         http.oauth2ResourceServer(t ->
