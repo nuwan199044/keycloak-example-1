@@ -44,6 +44,11 @@ public class RestaurantController {
         return restaurantService.createRestaurant(restaurantDTO);
     }
 
+    @PutMapping
+    public RestaurantDTO updateRestaurant(@RequestBody RestaurantDTO restaurantDTO) {
+        return restaurantService.updateRestaurant(restaurantDTO);
+    }
+
     @PutMapping("/menu/item/{itemId}/{price}")
     public MenuItemDTO updateMenuItemPrice(@PathVariable Long itemId, @PathVariable Double price) {
         return menuItemService.updateMenuItemPrice(itemId, price);

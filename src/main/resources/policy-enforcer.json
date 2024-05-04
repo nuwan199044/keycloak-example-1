@@ -5,6 +5,7 @@
   "credentials": {
     "secret": "ec7MpsGhwKySQRODy1ArvC31N9IszUxG"
   },
+  "http-method-as-scope": true,
   "paths": [
     {
       "path": "/restaurants/public/list",

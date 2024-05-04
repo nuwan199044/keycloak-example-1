@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +21,17 @@ public class RestaurantService {
         return modelMapper.map(restaurantRepository.save(modelMapper.map(restaurantDTO, Restaurant.class)), RestaurantDTO.class);
     }
 
-    public List<RestaurantDTO> getRestaurants(){
+    public RestaurantDTO updateRestaurant(RestaurantDTO restaurantDTO) {
+        return restaurantRepository.findById(restaurantDTO.getId())
+                .map(restaurant -> {
+                    modelMapper.map(restaurantDTO, restaurant);
+                    return restaurantRepository.save(restaurant);
+                })
+                .map(updatedRestaurant -> modelMapper.map(updatedRestaurant, RestaurantDTO.class))
+                .orElse(null);
+    }
+
+    public List<RestaurantDTO> getRestaurants() {
         return restaurantRepository.findAll()
                 .stream()
                 .map(restaurant -> modelMapper.map(restaurant, RestaurantDTO.class))
