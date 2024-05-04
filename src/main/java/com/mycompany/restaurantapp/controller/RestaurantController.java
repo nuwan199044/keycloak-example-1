@@ -7,7 +7,6 @@ import com.mycompany.restaurantapp.service.MenuItemService;
 import com.mycompany.restaurantapp.service.MenuService;
 import com.mycompany.restaurantapp.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -44,7 +42,6 @@ public class RestaurantController {
     }
 
     @PutMapping("/menu/item/{itemId}/{price}")
-    @PreAuthorize("hasRole('owner')")
     public MenuItemDTO createRestaurant(@PathVariable Long itemId, @PathVariable Double price) {
         return menuItemService.updateMenuItemPrice(itemId, price);
     }
