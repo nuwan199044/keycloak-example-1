@@ -40,14 +40,12 @@ public class RestaurantController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('admin')")
     public RestaurantDTO createRestaurant(@RequestBody RestaurantDTO restaurantDTO) {
         return restaurantService.createRestaurant(restaurantDTO);
     }
 
     @PutMapping("/menu/item/{itemId}/{price}")
-    @PreAuthorize("hasRole('owner')")
-    public MenuItemDTO createRestaurant(@PathVariable Long itemId, @PathVariable Double price) {
+    public MenuItemDTO updateMenuItemPrice(@PathVariable Long itemId, @PathVariable Double price) {
         return menuItemService.updateMenuItemPrice(itemId, price);
     }
 }
