@@ -66,6 +66,11 @@
 			<artifactId>keycloak-spring-boot-starter</artifactId>
 			<version>24.0.3</version>
 		</dependency>
+		<dependency>
+			<groupId>org.keycloak</groupId>
+			<artifactId>keycloak-admin-client</artifactId>
+			<version>24.0.3</version>
+		</dependency>
 	</dependencies>
 
 	<build>
