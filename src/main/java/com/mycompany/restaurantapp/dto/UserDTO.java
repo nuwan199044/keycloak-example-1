@@ -16,4 +16,5 @@ public class UserDTO {
     protected String lastName;
     protected String email;
     protected Boolean emailVerified;
+    protected Boolean enabled;
 }

@@ -4,7 +4,10 @@ import com.mycompany.restaurantapp.dto.RoleDTO;
 import com.mycompany.restaurantapp.dto.UserDTO;
 import com.mycompany.restaurantapp.util.KeycloakSecurityUtil;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
+import org.keycloak.admin.client.Keycloak;
+import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -52,10 +56,34 @@ public class UserController {
 
     @PostMapping("/user")
     public ResponseEntity createUser(@RequestBody UserDTO user) {
-        UserDTO userDTO = keycloakSecurityUtil.getKeycloakInstance()
-                .realm(realm).users().create(modelMapper.map(user, UserRepresentation.class))
-                .readEntity(UserDTO.class);
-        return ResponseEntity.status(HttpStatus.OK).body(userDTO);
+        Keycloak keycloak = keycloakSecurityUtil.getKeycloakInstance();
+
+        // Map UserDTO to UserRepresentation
+        UserRepresentation userRepresentation = modelMapper.map(user, UserRepresentation.class);
+
+        // Initialize credentials
+        List<CredentialRepresentation> creds = new ArrayList<>();
+        CredentialRepresentation cred = new CredentialRepresentation();
+        cred.setType(CredentialRepresentation.PASSWORD);
+        cred.setValue("124");
+        cred.setUserLabel("test_user_label"); // Set user label
+        cred.setTemporary(false);
+        cred.setSecretData("test sec data");
+        cred.setCredentialData("test cre data");
+        cred.setPriority(12);
+
+        // Add credentials to list
+        creds.add(cred);
+
+        // Set credentials to user representation
+        userRepresentation.setCredentials(creds);
+
+        // Create user in Keycloak
+        Response response = keycloak.realm(realm).users().create(userRepresentation);
+//        UserDTO userDTO = keycloakSecurityUtil.getKeycloakInstance()
+//                .realm(realm).users().create(modelMapper.map(user, UserRepresentation.class))
+//                .readEntity(UserDTO.class);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
     @PutMapping("/user")

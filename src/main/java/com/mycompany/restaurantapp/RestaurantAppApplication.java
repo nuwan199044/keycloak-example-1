@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 @SecurityScheme(
 		name="Keycloak",
-		openIdConnectUrl = "http://localhost:8081/realms/restaurant-dev/.well-known/openid-configuration",
+		openIdConnectUrl = "http://localhost:8080/realms/restaurant-dev/.well-known/openid-configuration",
 		scheme = "bearer",
 		type = SecuritySchemeType.OPENIDCONNECT,
 		in = SecuritySchemeIn.HEADER

@@ -1,6 +1,6 @@
 {
   "realm": "restaurant-dev",
-  "auth-server-url": "http://localhost:8081",
+  "auth-server-url": "http://localhost:8080",
   "resource": "restaurant-be",
   "credentials": {
     "secret": "ec7MpsGhwKySQRODy1ArvC31N9IszUxG"
